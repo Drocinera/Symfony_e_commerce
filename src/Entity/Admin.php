@@ -2,16 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
+use App\Repository\AdminRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Entity(repositoryClass: AdminRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -32,12 +30,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     private ?string $password = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $delivery_address = null;
-
-    #[ORM\Column]
-    private bool $isVerified = false;
 
     public function getId(): ?int
     {
@@ -75,7 +67,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_ADMIN';
 
         return array_unique($roles);
     }
@@ -112,29 +104,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
-    }
-
-    public function getDeliveryAddress(): ?string
-    {
-        return $this->delivery_address;
-    }
-
-    public function setDeliveryAddress(string $delivery_address): static
-    {
-        $this->delivery_address = $delivery_address;
-
-        return $this;
-    }
-
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setVerified(bool $isVerified): static
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
     }
 }
