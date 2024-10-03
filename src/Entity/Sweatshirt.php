@@ -34,6 +34,9 @@ class Sweatshirt
     #[ORM\Column]
     private ?bool $Highlight = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function __construct()
     {
         $this->sweatshirtSizes = new ArrayCollection();
@@ -118,6 +121,18 @@ class Sweatshirt
     public function setHighlight(bool $Highlight): static
     {
         $this->Highlight = $Highlight;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

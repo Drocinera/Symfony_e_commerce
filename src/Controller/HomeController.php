@@ -1,18 +1,24 @@
 <?php
 
+// src/Controller/HomeController.php
+
 namespace App\Controller;
 
+use App\Repository\SweatshirtRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'app_home')]
-    public function index(): Response
+    #[Route('/', name: 'home')]
+    public function index(SweatshirtRepository $sweatshirtRepository): Response
     {
-        return $this->render('home/index.html.twig', [
-            'controller_name' => 'HomeController',
+        // Récupérer les produits mis en avant (highlight = true)
+        $highlightedSweatshirts = $sweatshirtRepository->findBy(['highlight' => true]);
+
+        return $this->render('home.html.twig', [
+            'highlightedSweatshirts' => $highlightedSweatshirts,
         ]);
     }
 }

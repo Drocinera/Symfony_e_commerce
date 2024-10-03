@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ sweatshirt.name }}</h1>
+
+    <div class="product-details">
+        <img src="{{ asset('images/' ~ sweatshirt.image) }}" alt="{{ sweatshirt.name }}">
+        <div class="details">
+            <p>Prix : {{ sweatshirt.price }} €</p>
+            <p>Description : {{ sweatshirt.description }}</p>
+
+            <h3>Tailles disponibles :</h3>
+            <ul>
+                {% for size in sweatshirt.sizes %}
+                    <li>{{ size.size }} - Stock : {{ size.stock }}</li>
+                {% endfor %}
+            </ul>
+
+            <a href="{{ path('cart_add', {id: sweatshirt.id}) }}" class="btn">Ajouter au panier</a>
+        </div>
+    </div>
+{% endblock %}
+
