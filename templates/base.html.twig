@@ -4,7 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Stubborn{% endblock %}</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/admin.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/home.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/cart.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/header.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/product.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/products.css') }}">
+    <link rel="stylesheet" href="{{ asset('styles/registration.css') }}">
+    
 </head>
 <body>
     <nav>
@@ -12,17 +21,20 @@
             <a href="{{ path('home') }}">
                 <img src="{{ asset('images/Logo.png') }}" alt="Logo" class="logo">
             </a>
+            <div class="slogan">
+                Don't compromise on your look
+            </div>
         </div>
         <div class="nav-right">
             {% if app.user %}
                 <!-- L'utilisateur est connecté -->
-                <a href="{{ path('app_home') }}">Accueil</a>
+                <a href="{{ path('home') }}">Accueil</a>
                 <a href="{{ path('app_products') }}">Boutique</a>
                 <a href="{{ path('app_cart') }}">Panier</a>
                 <a href="{{ path('app_logout') }}">Se déconnecter</a>
             {% else %}
                 <!-- L'utilisateur n'est pas connecté -->
-                <a href="{{ path('app_home') }}">Accueil</a>
+                <a href="{{ path('home') }}">Accueil</a>
                 <a href="{{ path('app_register') }}">S'inscrire</a>
                 <a href="{{ path('app_login') }}">Se connecter</a>
             {% endif %}

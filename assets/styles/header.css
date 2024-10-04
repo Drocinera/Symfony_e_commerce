@@ -1,0 +1,38 @@
+nav {
+    display: flex;
+    justify-content: space-between; /* Espace entre la gauche et la droite */
+    align-items: center; /* Aligne verticalement le contenu */
+    padding: 10px 20px; /* Ajoute un peu d'espace autour */
+    background-color: #f8f9fa; /* Exemple de couleur de fond */
+}
+
+.nav-left {
+    display: flex;
+    flex-direction: column; /* Permet d'aligner le logo et le slogan verticalement */
+    align-items: flex-start; /* Aligne à gauche */
+}
+
+.nav-left .logo {
+    width: 100px; /* Ajuste la largeur du logo selon tes besoins */
+}
+
+.slogan {
+    font-size: 14px; /* Ajuste la taille de la police pour le slogan */
+    color: #333; /* Couleur du texte du slogan */
+    margin-top: 5px; /* Espace entre le logo et le slogan */
+}
+
+.nav-right {
+    display: flex; /* Utilise flex pour aligner les liens horizontalement */
+    gap: 15px; /* Espace entre les liens */
+}
+
+.nav-right a {
+    text-decoration: none; /* Supprime le soulignement des liens */
+    color: #007bff; /* Couleur des liens */
+    font-weight: bold; /* Met le texte en gras */
+}
+
+.nav-right a:hover {
+    text-decoration: underline; /* Souligner au survol */
+}

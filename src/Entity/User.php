@@ -22,10 +22,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     /**
-     * @var list<string> The user roles
+     * @var string The user roles stored as a comma-separated string
      */
-    #[ORM\Column]
-    private array $roles = [];
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $roles = null;
 
     /**
      * @var string The hashed password
@@ -73,7 +73,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        // Convert comma-separated roles string to array
+        $roles = explode(',', $this->roles ?? '');
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
 
@@ -85,7 +86,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setRoles(array $roles): static
     {
-        $this->roles = $roles;
+        // Convert roles array to a comma-separated string
+        $this->roles = implode(',', $roles);
 
         return $this;
     }

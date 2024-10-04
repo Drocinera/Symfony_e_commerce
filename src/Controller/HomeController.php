@@ -15,9 +15,9 @@ class HomeController extends AbstractController
     public function index(SweatshirtRepository $sweatshirtRepository): Response
     {
         // Récupérer les produits mis en avant (highlight = true)
-        $highlightedSweatshirts = $sweatshirtRepository->findBy(['highlight' => true]);
+        $highlightedSweatshirts = $sweatshirtRepository->findBy(['Highlight' => true]);
 
-        return $this->render('home.html.twig', [
+        return $this->render('home/home.html.twig', [
             'highlightedSweatshirts' => $highlightedSweatshirts,
         ]);
     }

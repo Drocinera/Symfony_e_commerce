@@ -22,25 +22,22 @@ class Sweatshirt
     #[ORM\Column]
     private ?float $price = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $size = [];
-
     /**
      * @var Collection<int, SweatshirtSize>
      */
-    #[ORM\OneToMany(targetEntity: SweatshirtSize::class, mappedBy: 'Sweatshirt_relation')]
-    private Collection $sweatshirtSizes;
+    #[ORM\OneToMany(mappedBy: 'sweatshirt', targetEntity: SweatshirtSize::class, cascade: ['persist', 'remove'])]
+    private Collection $sizes;
+
+    public function __construct()
+    {
+        $this->sizes = new ArrayCollection();
+    }
 
     #[ORM\Column]
     private ?bool $Highlight = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
-
-    public function __construct()
-    {
-        $this->sweatshirtSizes = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -71,47 +68,36 @@ class Sweatshirt
         return $this;
     }
 
-    public function getSize(): array
-    {
-        return $this->size;
-    }
-
-    public function setSize(array $size): static
-    {
-        $this->size = $size;
-
-        return $this;
-    }
-
-    /**
+       /**
      * @return Collection<int, SweatshirtSize>
      */
-    public function getSweatshirtSizes(): Collection
+    public function getSizes(): Collection
     {
-        return $this->sweatshirtSizes;
+        return $this->sizes;
     }
 
-    public function addSweatshirtSize(SweatshirtSize $sweatshirtSize): static
+    public function addSize(SweatshirtSize $size): self
     {
-        if (!$this->sweatshirtSizes->contains($sweatshirtSize)) {
-            $this->sweatshirtSizes->add($sweatshirtSize);
-            $sweatshirtSize->setSweatshirtRelation($this);
+        if (!$this->sizes->contains($size)) {
+            $this->sizes[] = $size;
+            $size->setSweatshirt($this);
         }
 
         return $this;
     }
 
-    public function removeSweatshirtSize(SweatshirtSize $sweatshirtSize): static
+    public function removeSize(SweatshirtSize $size): self
     {
-        if ($this->sweatshirtSizes->removeElement($sweatshirtSize)) {
+        if ($this->sizes->removeElement($size)) {
             // set the owning side to null (unless already changed)
-            if ($sweatshirtSize->getSweatshirtRelation() === $this) {
-                $sweatshirtSize->setSweatshirtRelation(null);
+            if ($size->getSweatshirt() === $this) {
+                $size->setSweatshirt(null);
             }
         }
 
         return $this;
     }
+
 
     public function isHighlight(): ?bool
     {
