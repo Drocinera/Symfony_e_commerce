@@ -1,38 +1,43 @@
 nav {
     display: flex;
-    justify-content: space-between; /* Espace entre la gauche et la droite */
-    align-items: center; /* Aligne verticalement le contenu */
-    padding: 10px 20px; /* Ajoute un peu d'espace autour */
-    background-color: #f8f9fa; /* Exemple de couleur de fond */
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px 20px;
+    background-color: #f8f9fa;
 }
 
 .nav-left {
     display: flex;
-    flex-direction: column; /* Permet d'aligner le logo et le slogan verticalement */
-    align-items: flex-start; /* Aligne à gauche */
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .nav-left .logo {
-    width: 100px; /* Ajuste la largeur du logo selon tes besoins */
+    width: 10em;
 }
 
 .slogan {
-    font-size: 14px; /* Ajuste la taille de la police pour le slogan */
-    color: #333; /* Couleur du texte du slogan */
-    margin-top: 5px; /* Espace entre le logo et le slogan */
+    font-size: 14px;
+    color: #333;
+    margin-top: 5px;
 }
 
 .nav-right {
-    display: flex; /* Utilise flex pour aligner les liens horizontalement */
-    gap: 15px; /* Espace entre les liens */
+    display: flex;
+    gap: 15px;
 }
 
 .nav-right a {
-    text-decoration: none; /* Supprime le soulignement des liens */
-    color: #007bff; /* Couleur des liens */
-    font-weight: bold; /* Met le texte en gras */
+    text-decoration: none;
+    font-weight: normal;
+}
+
+.nav-right a.active {
+    font-weight: bold; 
+    text-decoration: underline;
+    color: red;
 }
 
 .nav-right a:hover {
-    text-decoration: underline; /* Souligner au survol */
+    text-decoration: underline;
 }

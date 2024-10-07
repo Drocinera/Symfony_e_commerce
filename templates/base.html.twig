@@ -28,15 +28,29 @@
         <div class="nav-right">
             {% if app.user %}
                 <!-- L'utilisateur est connecté -->
-                <a href="{{ path('home') }}">Accueil</a>
-                <a href="{{ path('app_products') }}">Boutique</a>
-                <a href="{{ path('app_cart') }}">Panier</a>
-                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+                <a href="{{ path('home') }}" class="{% if app.request.get('_route') == 'home' %}active{% endif %}">
+                Accueil
+                </a>
+                <a href="{{ path('app_products') }}" class="{% if app.request.get('_route') == 'app_products' %}active{% endif %}">
+                    Boutique
+                </a>
+                <a href="{{ path('app_cart') }}" class="{% if app.request.get('_route') == 'app_cart' %}active{% endif %}">
+                    Panier
+                </a>
+                <a href="{{ path('app_logout') }}">
+                    Se déconnecter
+                </a>
             {% else %}
                 <!-- L'utilisateur n'est pas connecté -->
-                <a href="{{ path('home') }}">Accueil</a>
-                <a href="{{ path('app_register') }}">S'inscrire</a>
-                <a href="{{ path('app_login') }}">Se connecter</a>
+                <a href="{{ path('home') }}" class="{% if app.request.get('_route') == 'home' %}active{% endif %}">
+                Accueil
+                </a>
+                <a href="{{ path('app_register') }}" class="{% if app.request.get('_route') == 'app_register' %}active{% endif %}">
+                    S'inscrire
+                </a>
+                <a href="{{ path('app_login') }}" class="{% if app.request.get('_route') == 'app_login' %}active{% endif %}">
+                    Se connecter
+                </a>
             {% endif %}
         </div>
     </nav>

@@ -9,15 +9,20 @@
         <div class="product-grid">
             {% for sweatshirt in highlightedSweatshirts %}
                 <div class="product-card">
-                    <img src="{{ asset('images/' ~ sweatshirt.image) }}" alt="{{ sweatshirt.name }}">
-                    <h3>{{ sweatshirt.name }}</h3>
-                    <p>{{ sweatshirt.price }} €</p>
-
-                    {% if app.user %}
-                        <a href="{{ path('product_show', {id: sweatshirt.id}) }}" class="btn">Voir</a>
-                    {% else %}
-                        <p>Connectez-vous pour voir les détails</p>
-                    {% endif %}
+                    <div class="product-image">
+                        <img src="{{ asset('images/' ~ sweatshirt.image) }}" alt="{{ sweatshirt.name }}">
+                    </div>
+                    <div class="product-details">
+                        <h3>Nom: {{ sweatshirt.name }}</h3>
+                        <p><strong>Prix: {{ sweatshirt.price }} € </strong></p>
+                        <div class="product-action">
+                            {% if app.user %}
+                                <a href="{{ path('product_show', {id: sweatshirt.id}) }}" class="btn">Voir</a>
+                            {% else %}
+                                <p>Connectez-vous pour voir les détails</p>
+                            {% endif %}
+                        </div>
+                    </div>
                 </div>
             {% else %}
                 <p>Aucun produit mis en avant pour l'instant.</p>
@@ -25,13 +30,15 @@
         </div>
     </section>
 
+
+
     <section class="about-us">
         <h2>Qui sommes-nous ?</h2>
-        <p>Notre entreprise est spécialisée dans la création et la vente de sweat-shirts de qualité, adaptés à tous les styles et toutes les tailles.
-        Nom de la société : Stubborn
-        Adresse : Piccadilly Circus, London W1J 0DA, Royaume-Uni
-        Adresse de contact : stubborn@blabla.com
-        Slogan: Don't compromise on your look
+        <p>Notre entreprise est spécialisée dans la création et la vente de sweat-shirts de qualité, adaptés à tous les styles et toutes les tailles. <br>
+        <strong>Nom de la société</strong> : Stubborn <br>
+        <strong>Adresse</strong> : Piccadilly Circus, London W1J 0DA, Royaume-Uni <br>
+        <strong>Adresse de contact </strong>: stubborn@blabla.com <br>
+        <strong>Slogan</strong>: Don't compromise on your look <br>
 </p>
     </section>
 {% endblock %}
