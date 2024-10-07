@@ -16,7 +16,8 @@
                 {% endfor %}
             </ul>
 
-            <a href="{{ path('cart_add', {id: sweatshirt.id}) }}" class="btn">Ajouter au panier</a>
+            <a href="{{ path('cart_add', {id: sweatshirt.id}) }}" class="btn">Ajouter au panier</a> <br>
+            <a href="{{ path('app_products') }}" class="btn">Retour à la liste</a>
         </div>
     </div>
 {% endblock %}

@@ -16,6 +16,19 @@ class SweatshirtRepository extends ServiceEntityRepository
         parent::__construct($registry, Sweatshirt::class);
     }
 
+    public function findByPriceRange(float $minPrice, float $maxPrice): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.price >= :minPrice')
+            ->andWhere('s.price <= :maxPrice')
+            ->setParameter('minPrice', $minPrice)
+            ->setParameter('maxPrice', $maxPrice)
+            ->orderBy('s.price', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+}
+
     //    /**
     //     * @return Sweatshirt[] Returns an array of Sweatshirt objects
     //     */
@@ -40,4 +53,4 @@ class SweatshirtRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
-}
+

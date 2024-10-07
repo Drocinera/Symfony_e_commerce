@@ -1,20 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ProductsController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/theop/symfony-e-commerce/src/Controller/ProductsController.php</code></li>
-        <li>Your template at <code>C:/Users/theop/symfony-e-commerce/templates/products/index.html.twig</code></li>
-    </ul>
-</div>
+    <h1>Nos Sweat-shirts</h1>
+    <section class="products-list">
+        <div class="product-grid">
+                <!-- Filtres de prix -->
+        <form method="get" action="{{ path('app_products') }}">
+            <label for="priceRange">Filtrer par prix :</label>
+            <select name="priceRange" id="priceRange" onchange="this.form.submit()">
+                <option value="all" {% if currentPriceRange == 'all' %}selected{% endif %}>Tous</option>
+                <option value="10-29" {% if currentPriceRange == '10-29' %}selected{% endif %}>10 à 29 €</option>
+                <option value="29-35" {% if currentPriceRange == '29-35' %}selected{% endif %}>29 à 35 €</option>
+                <option value="35-50" {% if currentPriceRange == '35-50' %}selected{% endif %}>35 à 50 €</option>
+            </select>
+        </form>
+            {% for sweatshirt in sweatshirts %}
+                <div class="product-card">
+                    <img src="{{ asset('images/' ~ sweatshirt.image) }}" alt="{{ sweatshirt.name }}">
+                    <div class="product-details">
+                        <h3>Nom : {{ sweatshirt.name }}</h3>
+                        <p><strong>Prix : {{ sweatshirt.price }} €</strong></p>
+                    </div>
+                    <div class="product-action">
+                        <a href="{{ path('product_show', {id: sweatshirt.id}) }}" class="btn">Voir</a>
+                    </div>
+                </div>
+            {% else %}
+                <p>Aucun produit disponible pour le moment.</p>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}
