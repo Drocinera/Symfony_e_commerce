@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\SweatshirtRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SweatshirtRepository::class)]
@@ -22,22 +21,20 @@ class Sweatshirt
     #[ORM\Column]
     private ?float $price = null;
 
-    /**
-     * @var Collection<int, SweatshirtSize>
-     */
-    #[ORM\OneToMany(mappedBy: 'sweatshirt', targetEntity: SweatshirtSize::class, cascade: ['persist', 'remove'])]
+    #[ORM\Column]
+    private ?bool $highlight = null; 
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    // Relation OneToMany avec SweatshirtSize 
+    #[ORM\OneToMany(mappedBy: 'sweatshirt', targetEntity: SweatshirtSize::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $sizes;
 
     public function __construct()
     {
         $this->sizes = new ArrayCollection();
     }
-
-    #[ORM\Column]
-    private ?bool $Highlight = null;
-
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
 
     public function getId(): ?int
     {
@@ -68,7 +65,7 @@ class Sweatshirt
         return $this;
     }
 
-       /**
+    /**
      * @return Collection<int, SweatshirtSize>
      */
     public function getSizes(): Collection
@@ -76,20 +73,20 @@ class Sweatshirt
         return $this->sizes;
     }
 
-    public function addSize(SweatshirtSize $size): self
+    public function addSize(SweatshirtSize $size): static
     {
         if (!$this->sizes->contains($size)) {
-            $this->sizes[] = $size;
+            $this->sizes->add($size);
             $size->setSweatshirt($this);
         }
 
         return $this;
     }
 
-    public function removeSize(SweatshirtSize $size): self
+    public function removeSize(SweatshirtSize $size): static
     {
         if ($this->sizes->removeElement($size)) {
-            // set the owning side to null (unless already changed)
+            // Si la taille appartient encore à ce sweatshirt, on la dissocie
             if ($size->getSweatshirt() === $this) {
                 $size->setSweatshirt(null);
             }
@@ -98,15 +95,14 @@ class Sweatshirt
         return $this;
     }
 
-
     public function isHighlight(): ?bool
     {
-        return $this->Highlight;
+        return $this->highlight;
     }
 
-    public function setHighlight(bool $Highlight): static
+    public function setHighlight(bool $highlight): static
     {
-        $this->Highlight = $Highlight;
+        $this->highlight = $highlight;
 
         return $this;
     }

@@ -19,8 +19,10 @@ class SweatshirtSize
     #[ORM\Column]
     private ?int $stock = null;
 
-    #[ORM\ManyToOne(inversedBy: 'sweatshirtSizes')]
-    private ?Sweatshirt $Sweatshirt_relation = null;
+    // Relation ManyToOne avec Sweatshirt (nommé sweatshirt ici au lieu de Sweatshirt_relation)
+    #[ORM\ManyToOne(inversedBy: 'sizes')]
+    #[ORM\JoinColumn(nullable: false)]  // Cela permet de rendre la relation obligatoire
+    private ?Sweatshirt $sweatshirt = null;
 
     public function getId(): ?int
     {
@@ -51,14 +53,14 @@ class SweatshirtSize
         return $this;
     }
 
-    public function getSweatshirtRelation(): ?Sweatshirt
+    public function getSweatshirt(): ?Sweatshirt
     {
-        return $this->Sweatshirt_relation;
+        return $this->sweatshirt;
     }
 
-    public function setSweatshirtRelation(?Sweatshirt $Sweatshirt_relation): static
+    public function setSweatshirt(?Sweatshirt $sweatshirt): static
     {
-        $this->Sweatshirt_relation = $Sweatshirt_relation;
+        $this->sweatshirt = $sweatshirt;
 
         return $this;
     }
