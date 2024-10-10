@@ -86,9 +86,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setRoles(array $roles): static
     {
-        // Convert roles array to a comma-separated string
+        // Assurer que les roles ne sont jamais null ou vide
+        if (empty($roles)) {
+            $roles = ['ROLE_USER']; 
+        }
+        
+        // Convertir le tableau de roles en chaîne de caractères
         $this->roles = implode(',', $roles);
-
+    
         return $this;
     }
 

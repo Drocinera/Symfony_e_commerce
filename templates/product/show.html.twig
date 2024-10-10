@@ -9,19 +9,22 @@
             <P>Nom : {{ sweatshirt.name }} </p>
             <p>Prix : {{ sweatshirt.price }} €</p>
         </div>
-        <div class="details-size">
-            <h3>Tailles disponibles :</h3>
-            <ul>
-                {% for size in sweatshirt.sizes %}
-                    <li>{{ size.size }} - Stock : {{ size.stock }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        <div class="add-cart">
-            <a href="{{ path('app_cart', {id: sweatshirt.id}) }}" class="btn">Ajouter au panier</a> <br>
+       <div class="details-size">
+            <h3>Choisir une taille :</h3>
+            <form action="{{ path('app_cart', {id: sweatshirt.id}) }}" method="post">
+                <label for="size">Taille disponible :</label>
+                <select name="size" id="size">
+                    {% for size in sweatshirt.sizes %}
+                        <option value="{{ size.size }}">{{ size.size }} - Stock : {{ size.stock }}</option>
+                    {% endfor %}
+                </select>
+                <br><br>
+                <button type="submit" class="btn">Ajouter au panier</button>
+            </form>
         </div>
         
     </div>
+    
     <div>
         <a href="{{ path('app_products') }}" class="btn">Retour à la liste</a>
     <div>

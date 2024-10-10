@@ -15,4 +15,10 @@ class CartController extends AbstractController
             'controller_name' => 'CartController',
         ]);
     }
+
+    public function addToCart(Request $request, int $id): Response
+{
+    $selectedSize = $request->request->get('size');
+
+}
 }
