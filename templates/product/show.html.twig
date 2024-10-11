@@ -6,10 +6,10 @@
     <div class="show-product-details">
         <img src="{{ asset('images/' ~ sweatshirt.image) }}" alt="{{ sweatshirt.name }}">
         <div class="details">
-            <P>Nom : {{ sweatshirt.name }} </p>
+            <p>Nom : {{ sweatshirt.name }}</p>
             <p>Prix : {{ sweatshirt.price }} €</p>
         </div>
-       <div class="details-size">
+        <div class="details-size">
             <h3>Choisir une taille :</h3>
             <form action="{{ path('app_cart', {id: sweatshirt.id}) }}" method="post">
                 <label for="size">Taille disponible :</label>
@@ -22,10 +22,9 @@
                 <button type="submit" class="btn">Ajouter au panier</button>
             </form>
         </div>
-        
     </div>
-    
+
     <div>
         <a href="{{ path('app_products') }}" class="btn">Retour à la liste</a>
-    <div>
+    </div>
 {% endblock %}
