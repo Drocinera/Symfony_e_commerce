@@ -107,6 +107,11 @@ class Sweatshirt
         return $this;
     }
 
+    public function getHighlight(): bool
+    {
+        return $this->highlight;
+    }
+
     public function getImage(): ?string
     {
         return $this->image;

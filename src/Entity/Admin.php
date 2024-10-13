@@ -20,10 +20,10 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     /**
-     * @var list<string> The user roles
+     * @var string The admin roles stored as a comma-separated string
      */
-    #[ORM\Column]
-    private array $roles = [];
+    #[ORM\Column(type: 'string', length: 255)]
+    private ?string $roles = null;
 
     /**
      * @var string The hashed password
@@ -61,22 +61,23 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @see UserInterface
      *
-     * @return list<string>
+     * @return array<string>
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_ADMIN';
-
-        return array_unique($roles);
+        // guarantee every user at least has ROLE_ADMIN
+        return array_unique($this->roles);
     }
 
     /**
-     * @param list<string> $roles
+     * @param array<string> $roles
      */
     public function setRoles(array $roles): static
     {
+        if (empty($roles)) {
+            $roles = ['ROLE_ADMIN'];
+        }
+
         $this->roles = $roles;
 
         return $this;

@@ -1,20 +1,103 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+    <div class="container mt-5">
+        <h1>Administration</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+        <h2>Ajouter un produit</h2>
+        <div class="form-admin">
+            {{ form_start(addForm, { 'attr': {'class': 'row g-3'} }) }}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/theop/symfony-e-commerce/src/Controller/AdminController.php</code></li>
-        <li>Your template at <code>C:/Users/theop/symfony-e-commerce/templates/admin/index.html.twig</code></li>
-    </ul>
-</div>
+            <!-- Image du produit -->
+            <div class="col-md-3">
+                <div class="form-group">
+                    {{ form_label(addForm.image) }}
+                    {{ form_widget(addForm.image, {'attr': {'class': 'form-control'}}) }}
+                </div>
+            </div>
+
+            <!-- Détails du produit (Nom et Prix) -->
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_label(addForm.name) }}
+                            {{ form_widget(addForm.name, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            {{ form_label(addForm.price) }}
+                            {{ form_widget(addForm.price, {'attr': {'class': 'form-control'}}) }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Champ Highlight -->
+                <div class="form-group mt-3">
+                    {{ form_widget(addForm.highlight, {'attr': {'class': 'form-check-input'}}) }}
+                    {{ form_label(addForm.highlight, 'Mettre en avant', {'label_attr': {'class': 'form-check-label'}}) }}
+                </div>
+
+                <!-- Tailles dynamiques -->
+                <h3>Tailles</h3>
+                <ul id="sweatshirt_sizes" data-prototype="{{ form_widget(addForm.sizes.vars.prototype)|e('html_attr') }}">
+                    {% for sizeForm in addForm.sizes %}
+                        <li class="col-md-2">
+                            {{ form_row(sizeForm.size) }}
+                            {{ form_row(sizeForm.stock) }}
+                        </li>
+                    {% endfor %}
+                </ul>
+
+                <!-- Bouton pour ajouter une taille -->
+                <button type="button" id="add_size" class="btn btn-secondary mt-3">Ajouter une taille</button>
+            </div>
+
+            <!-- Bouton Ajouter (Soumettre le formulaire) -->
+            <div class="col-md-12 d-flex justify-content-end mt-3">
+                <button type="submit" class="btn btn-primary">Ajouter</button>
+            </div>
+
+            {{ form_end(addForm) }}
+        </div>
+
+        <!-- Liste des produits existants -->
+        <h2>Liste des produits</h2>
+        {% for sweatshirt in sweatshirts %}
+            <div class="sweatshirt-item">
+                <img src="{{ asset('images/' ~ sweatshirt.image) }}" alt="{{ sweatshirt.name }}">
+                <h3 class="sweatshirt-name-admin">{{ sweatshirt.name }}</h3>
+                <p>Prix : {{ sweatshirt.price }} €</p>
+                <ul class="sweatshirt-size-stock">
+                    {% for size in sweatshirt.sizes %}
+                        <li class="sweatshirt-size-stock-detail">Stock {{ size.size }}: {{ size.stock }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="action-btn-admin">
+                    <a href="{{ path('admin_edit', { id: sweatshirt.id }) }}" class="btn btn-secondary">Modifier</a>
+                    <form action="{{ path('admin_delete', { id: sweatshirt.id }) }}" method="post" style="display: inline;">
+                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                    </form>
+                </div>
+            </div>
+        {% else %}
+            <p>Aucun produit trouvé.</p>
+        {% endfor %}
+    </div>
+
+    <!-- Script pour gérer l'ajout dynamique des tailles -->
+    <script type="text/javascript">
+        document.getElementById('add_size').addEventListener('click', function() {
+            const list = document.querySelector('#sweatshirt_sizes');
+            const newWidget = list.getAttribute('data-prototype');
+            const count = list.children.length;
+            const newWidgetHtml = newWidget.replace(/__name__/g, count);
+
+            const newElem = document.createElement('li');
+            newElem.innerHTML = newWidgetHtml;
+            list.appendChild(newElem);
+        });
+    </script>
 {% endblock %}
