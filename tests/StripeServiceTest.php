@@ -15,7 +15,7 @@ class StripeServiceTest extends TestCase
             'price_data' => [
                 'currency' => 'eur',
                 'product_data' => [
-                    'name' => 'T-shirt',
+                    'name' => 'Sweatshirt',
                 ],
                 'unit_amount' => 2000, // en centimes
             ],
