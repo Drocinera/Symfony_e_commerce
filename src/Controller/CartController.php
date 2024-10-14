@@ -3,19 +3,24 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Service\StripeService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Repository\SweatshirtRepository;
 
 class CartController extends AbstractController
 {
+    
     private $sweatshirtRepository;
+    private $stripeService;
 
-    public function __construct(SweatshirtRepository $sweatshirtRepository)
+    public function __construct(SweatshirtRepository $sweatshirtRepository, StripeService $stripeService)
     {
         $this->sweatshirtRepository = $sweatshirtRepository;
+        $this->stripeService = $stripeService;
     }
 
     #[Route('/cart/add/{id}', name: 'app_cart', methods: ['POST'])]
@@ -86,4 +91,58 @@ class CartController extends AbstractController
         
         return $this->redirectToRoute('app_cart_view');
     }
+
+    // Créer une session de paiement Stripe
+    #[Route('/cart/checkout', name: 'cart_checkout', methods: ['POST'])]
+    public function checkout(SessionInterface $session): Response
+    {
+        $cart = $session->get('cart', []);
+
+        if (empty($cart)) {
+            return $this->redirectToRoute('app_cart_view');
+        }
+
+        $items = [];
+        foreach ($cart as $item) {
+            $sweatshirt = $this->sweatshirtRepository->find($item['sweatshirt_id']);
+            if ($sweatshirt) {
+                $items[] = [
+                    'price_data' => [
+                        'currency' => 'eur',
+                        'product_data' => [
+                            'name' => $sweatshirt->getName(),
+                        ],
+                        'unit_amount' => $sweatshirt->getPrice() * 100, // Stripe demande le montant en centimes
+                    ],
+                    'quantity' => 1,
+                ];
+            }
+        }
+
+        $checkoutSession = $this->stripeService->createCheckoutSession(
+            $items,
+            $this->generateUrl('success_url', [], UrlGeneratorInterface::ABSOLUTE_URL),
+            $this->generateUrl('cancel_url', [], UrlGeneratorInterface::ABSOLUTE_URL)
+        );
+
+        return $this->redirect($checkoutSession->url);
+    }
+
+    // Redirection après succès du paiement
+    #[Route('/cart/success', name: 'success_url')]
+    public function success(): Response
+    {
+        return $this->render('cart/success.html.twig', [
+            'message' => 'Votre paiement a été effectué avec succès.',
+        ]);
+    }
+
+    // Redirection après annulation du paiement
+    #[Route('/cart/cancel', name: 'cancel_url')]
+    public function cancel(): Response
+    {
+        return $this->render('cart/cancel.html.twig', [
+            'message' => 'Votre paiement a été annulé.',
+        ]);
+    }    
 }
