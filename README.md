@@ -33,7 +33,7 @@ installés :
   
  ## 4.1. Clonage du projet
  
-git clone https://github.com/mon-projet.git
+git clone https://github.com/Symfony_e_commerc
 cd mon-projet
 
 ## 4.2. Installation des dépendances
