@@ -53,6 +53,8 @@ Créez le fichier .env et configurez les variables suivantes :
 
 symfony console doctrine:database:create
 symfony console doctrine:migrations:migrate
+Symfony console doctrine:fixtures:load 
+
 
 ## 4.5. Démarrage du serveur
 
