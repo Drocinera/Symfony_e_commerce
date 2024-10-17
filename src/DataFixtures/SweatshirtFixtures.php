@@ -11,16 +11,16 @@ class SweatshirtFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $sweatshirtsData = [
-            ['name' => 'Blackbelt', 'price' => 29,90 , 'highlight' => true, 'image' => 'sweatshirt1.jpg'],
-            ['name' => 'BlueBelt', 'price' => 29,90 , 'highlight' => false, 'image' => 'sweatshirt2.jpg'],
-            ['name' => 'Street', 'price' => 34,50 , 'highlight' => false, 'image' => 'sweatshirt3.jpg'],
-            ['name' => 'Pokeball', 'price' => 45, 'highlight' => true, 'image' => 'sweatshirt4.jpg'],
-            ['name' => 'PinkLady', 'price' => 29,90 , 'highlight' => false, 'image' => 'sweatshirt5.jpg'],
-            ['name' => 'Snow', 'price' => 32, 'highlight' => false, 'image' => 'sweatshirt6.jpg'],
-            ['name' => 'Greyback', 'price' => 28,50, 'highlight' => false, 'image' => 'sweatshirt7.jpg'],
-            ['name' => 'BlueCloud', 'price' => 45, 'highlight' => false, 'image' => 'sweatshirt8.jpg'],
-            ['name' => 'BornInUsa', 'price' =>  59,90 , 'highlight' => true, 'image' => 'sweatshirt9.jpg'],
-            ['name' => ' GreenSchool', 'price' => 42,20, 'highlight' => false, 'image' => 'sweatshirt10.jpg'],
+            ['name' => 'Blackbelt', 'price' => 29,90 , 'highlight' => true, 'image' => 'sweatshirt1.jpeg'],
+            ['name' => 'BlueBelt', 'price' => 29,90 , 'highlight' => false, 'image' => 'sweatshirt2.jpeg'],
+            ['name' => 'Street', 'price' => 34,50 , 'highlight' => false, 'image' => 'sweatshirt3.jpeg'],
+            ['name' => 'Pokeball', 'price' => 45, 'highlight' => true, 'image' => 'sweatshirt4.jpeg'],
+            ['name' => 'PinkLady', 'price' => 29,90 , 'highlight' => false, 'image' => 'sweatshirt5.jpeg'],
+            ['name' => 'Snow', 'price' => 32, 'highlight' => false, 'image' => 'sweatshirt6.jpeg'],
+            ['name' => 'Greyback', 'price' => 28,50, 'highlight' => false, 'image' => 'sweatshirt7.jpeg'],
+            ['name' => 'BlueCloud', 'price' => 45, 'highlight' => false, 'image' => 'sweatshirt8.jpeg'],
+            ['name' => 'BornInUsa', 'price' =>  59,90 , 'highlight' => true, 'image' => 'sweatshirt9.jpeg'],
+            ['name' => ' GreenSchool', 'price' => 42,20, 'highlight' => false, 'image' => 'sweatshirt10.jpeg'],
         ];
 
         foreach ($sweatshirtsData as $key => $data) {

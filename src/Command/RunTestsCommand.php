@@ -13,14 +13,14 @@ class RunTestsCommand extends Command
 
     protected function configure()
     {
-        $this->setDescription('Exécute les tests PHPUnit au démarrage de l\'application.');
+        $this->setName('app:run-tests')
+            ->setDescription('Exécute les tests PHPUnit au démarrage de l\'application.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('Lancement des tests...');
 
-        // Lance PHPUnit
         $process = new Process(['php', 'bin/phpunit']);
         $process->run(function ($type, $buffer) use ($output) {
             $output->write($buffer);

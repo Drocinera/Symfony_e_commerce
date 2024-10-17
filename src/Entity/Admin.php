@@ -65,8 +65,8 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        // guarantee every user at least has ROLE_ADMIN
-        return array_unique($this->roles);
+        // Convertir la chaîne de rôles en tableau
+        return explode(',', $this->roles ?? '');
     }
 
     /**
@@ -74,11 +74,13 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function setRoles(array $roles): static
     {
+        // Assurer que chaque admin a au moins un rôle (ROLE_ADMIN par défaut)
         if (empty($roles)) {
             $roles = ['ROLE_ADMIN'];
         }
 
-        $this->roles = $roles;
+        // Convertir le tableau de rôles en chaîne de caractères
+        $this->roles = implode(',', $roles);
 
         return $this;
     }
@@ -103,7 +105,6 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function eraseCredentials(): void
     {
-        // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
     }
 }

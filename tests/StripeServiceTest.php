@@ -7,9 +7,15 @@ use PHPUnit\Framework\TestCase;
 
 class StripeServiceTest extends TestCase
 {
+
+    protected static function getKernelClass(): string
+    {
+        return \App\Kernel::class;
+    }
+
     public function testCreateCheckoutSession()
     {
-        $stripeService = new StripeService('sk_test_xxxxxxxxxxxxxxxxx');
+        $stripeService = new StripeService('sk_test_51Q9nhjRqck3hAfCRZnySZw6kz1kFUc5JdOC8UjQV1ej7Fgd3P83icPGinEVbj2oh1m55vUWoAW68JsOrnvhzPwKU00yOgNDxqB');
         
         $items = [[
             'price_data' => [

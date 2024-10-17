@@ -6,6 +6,11 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class CartControllerTest extends WebTestCase
 {
+    protected static function getKernelClass(): string
+    {
+        return \App\Kernel::class;
+    }
+
     public function testAddToCart()
     {
         $client = static::createClient();
